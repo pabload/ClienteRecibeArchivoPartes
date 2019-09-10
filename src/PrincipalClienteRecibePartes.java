@@ -69,27 +69,21 @@ public class PrincipalClienteRecibePartes {
                     try {
                     File Archivo = new File(datos);
                     tamar = Integer.parseInt(datosEntrada);
-                    byte[] mybytearray = new byte[tamar];
+                    byte[] mybytearray = new byte[tamar/9];
                     InputStream is = socket.getInputStream();
                     fos = new FileOutputStream(direcion + "\\" + Archivo.getName());
                     bos = new BufferedOutputStream(fos);
-                    bytesRead = is.read(mybytearray, 0, mybytearray.length);
-                    current = bytesRead;
-                    
-                    do {
-                        bytesRead = is.read(mybytearray, current, (mybytearray.length - current));
-                          System.out.print("|");
-                        if (bytesRead >= 0) {
-                            current += bytesRead;
-                           
+                   int count;
+                        while ((count = is.read(mybytearray)) > 0) {
+                            
+                            fos.write(mybytearray, 0, count);
+                            System.out.print(count);
+                            System.out.print("-");
+                            
                            
                         }
-                    } while (bytesRead > 0);
-                   
-                    bos.write(mybytearray, 0, current);
-                    bos.flush();
+                    fos.close();
                     socket.close();
-                    System.out.println("File " + datos + " downloaded (" + current + " bytes read)"); 
                     } catch (Exception e) {
                         System.out.println("Error al recibir mensaje"+ e);
                     }
