@@ -69,19 +69,23 @@ public class PrincipalClienteRecibePartes {
                     try {
                     File Archivo = new File(datos);
                     tamar = Integer.parseInt(datosEntrada);
-                    byte[] mybytearray = new byte[tamar/9];
-                    InputStream is = socket.getInputStream();
-                    fos = new FileOutputStream(direcion + "\\" + Archivo.getName());
-                    bos = new BufferedOutputStream(fos);
+                    int a = (int) Math.round(tamar/10);
+                    System.out.println(tamar+"AAAAAAAAAAAAA");
+                   System.out.println(a +"BBBBBBBBBBBB");
+                   byte[] mybytearray = new byte[5000];
+                   InputStream is = socket.getInputStream();
+                   fos = new FileOutputStream(direcion + "\\" + Archivo.getName());
+                   bos = new BufferedOutputStream(fos);
                    int count;
+                   int c=0;
+                    System.out.println(mybytearray.length+"xdddddddddddddddddddd");
                         while ((count = is.read(mybytearray)) > 0) {
-                            
+                            c=c+count;
+                            System.out.print(c+"-");       
                             fos.write(mybytearray, 0, count);
-                            System.out.print(count);
-                            System.out.print("-");
-                            
-                           
+                                
                         }
+                       System.out.println("Porciento: "+ c);
                     fos.close();
                     socket.close();
                     } catch (Exception e) {
