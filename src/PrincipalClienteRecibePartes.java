@@ -69,24 +69,100 @@ public class PrincipalClienteRecibePartes {
                     try {
                     File Archivo = new File(datos);
                     tamar = Integer.parseInt(datosEntrada);
-                    int a = (int) Math.round(tamar/10);
-                    System.out.println(tamar+"AAAAAAAAAAAAA");
-                   System.out.println(a +"BBBBBBBBBBBB");
-                   byte[] mybytearray = new byte[5000];
                    InputStream is = socket.getInputStream();
                    fos = new FileOutputStream(direcion + "\\" + Archivo.getName());
                    bos = new BufferedOutputStream(fos);
                    int count;
                    int c=0;
+                   byte[] mybytearray = new byte[tamar/10];
                     System.out.println(mybytearray.length+"xdddddddddddddddddddd");
+                   int porciento=0;
+                   String barra="";
+                   int l1 = 0 ,l2 = 0,l3 = 0,l4 = 0,l5 = 0, l6 = 0, l7 = 0, l8 = 0, l9 = 0,l10 = 0;
                         while ((count = is.read(mybytearray)) > 0) {
                             c=c+count;
-                            System.out.print(c+"-");       
-                            fos.write(mybytearray, 0, count);
+                            porciento=(int) (((double)c/tamar)*100);
+                            switch (porciento) {
+                                case 10:
+                                    l1++;
+                                    if (l1 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 20:
+                                    l2++;
+                                    if (l2 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 30:
+                                    l3++;
+                                    if (l3 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 40:
+                                    l4++;
+                                    if (l4 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 50:
+                                    l5++;
+                                    if (l5 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 60:
+                                    l6++;
+                                    if (l6 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 70:
+                                    l7++;
+                                    if (l7 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 80:
+                                    l8++;
+                                    if (l8 < 2) {
+                                        barra = barra + "-";
+                                    }
+                                    break;
+                                case 90:
+                                    l9++;
+                                    if (l9 < 2) {
+                                        barra = barra + "-";
+                                    }
+
+                                    break;
+                                case 100:
+                                    l10++;
+                                    if (l10 < 2) {
+                                        barra = barra + "-";
+                                    }
+                                   
+                                    break;
+                                default:
+
+                                    break;
                                 
+                            }                                              
+                            fos.write(mybytearray, 0, count);
+                            System.out.print(" Processing: " + porciento+"% "+barra+ " "+""+ "\r");         
                         }
-                       System.out.println("Porciento: "+ c);
+                      //System.out.println("Porciento: "+ c);
                     fos.close();
+                    fos.flush();
                     socket.close();
                     } catch (Exception e) {
                         System.out.println("Error al recibir mensaje"+ e);
