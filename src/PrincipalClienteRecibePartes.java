@@ -72,17 +72,29 @@ public class PrincipalClienteRecibePartes {
                    InputStream is = socket.getInputStream();
                    fos = new FileOutputStream(direcion + "\\" + Archivo.getName());
                    bos = new BufferedOutputStream(fos);
-                   int count;
-                   int c=0;
+                   long count;
+                   long c=0;
                     System.out.println(tamar+"aaaaaaaaaaaaa");
+                    byte[] buffer = null;
+                        if (tamar>100000000) {
+                            System.out.println("entro al primerbuffer");
+                           buffer = new byte[100000000];
+                        }else{
+                            if (tamar<=100000000) {
+                                System.out.println("entro al segundobuffer");
+                                buffer = new byte[(int)tamar/10];
+                            }
+                        
+                        }
+                     //buffer = new byte[(int)tamar/10];
                    //byte[] mybytearray = new byte[(int)(Math.round(tamar/10))];
-                    byte[] mybytearray = new byte[104];
-                   System.out.println(mybytearray.length+"xdddddddddddddddddddd");
-                   int porciento=0;
+                   
+                      System.out.println("saadadadasd"+buffer.length);
+                   long porciento=0;
                    String barra="";
                   int l1 = 0, l2 = 0, l3 = 0, l4 = 0, l5 = 0, l6 = 0, l7 = 0, l8 = 0, l9 = 0, l10 = 0;
-
-                        while ((count = is.read(mybytearray)) > 0) {
+                    
+                        while ((count = is.read(buffer)) > 0) {
                             c=c+count;
                             porciento=(int)(((double)c/tamar)*100);
                             //System.out.println(porciento);
@@ -90,7 +102,7 @@ public class PrincipalClienteRecibePartes {
                             if ((porciento%10)>0) {
                               porciento = porciento + ( 10 - (porciento%10));
                             }
-                            switch (porciento) {
+                            switch ((int)porciento) {
                                 case 10:
                                     l1++;
                                     if (l1 < 2) {
@@ -165,15 +177,14 @@ public class PrincipalClienteRecibePartes {
                                     break;
                                 
                             }                                              
-                            fos.write(mybytearray, 0, count);
+                            fos.write(buffer, 0, (int) count);
                             //System.out.println("llego a"+c);
-                            System.out.print("Processing: " + porciento+"%"+barra+ " "+""+ "\r");         
+                            System.out.print("Descargado: " + porciento+"% "+barra+ "\r");         
                         }
-                    // System.out.println("tamaño: "+ tamar);
-                   // System.out.println(tamar+"aaaaaaaaaaaaaaaaaaaaaa");
                     fos.close();
                     fos.flush();
                     socket.close();
+                    System.out.println("\n"+"Descarga existosa");
                     } catch (Exception e) {
                         System.out.println("Error al recibir mensaje"+ e);
                     }
