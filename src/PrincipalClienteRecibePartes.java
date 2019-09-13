@@ -80,10 +80,18 @@ public class PrincipalClienteRecibePartes {
                             System.out.println("entro al primerbuffer");
                            buffer = new byte[100000000];
                         }else{
-                            if (tamar<=100000000) {
+                            if (tamar<10) {
+                                buffer = new byte[(int)tamar];
+                            }else{
+                                   if (tamar<=100000000) {
                                 System.out.println("entro al segundobuffer");
                                 buffer = new byte[(int)tamar/10];
+                            
+                                
                             }
+                                
+                            }
+                            
                         
                         }
                      //buffer = new byte[(int)tamar/10];
@@ -179,7 +187,11 @@ public class PrincipalClienteRecibePartes {
                             }                                              
                             fos.write(buffer, 0, (int) count);
                             //System.out.println("llego a"+c);
+                            
                             System.out.print("Descargado: " + porciento+"% "+barra+ "\r");         
+                        }
+                        if (tamar <10) {
+                          System.out.print("Descargado: " + 100+"% "+"----------"+ "\r");  
                         }
                     fos.close();
                     fos.flush();
